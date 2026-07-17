@@ -51,7 +51,7 @@ export default function CheckoutPage() {
 
       <div className="pm-frame" style={{ padding: 32 }}>
         <Corners />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+        <div className="pm-fields">
           <div className="field"><label>{s.f_name}</label><input className="input" value={name} onChange={(e) => setName(e.target.value)} /></div>
           <div className="field"><label>{s.f_phone}</label><input className="input" value={phone} onChange={(e) => setPhone(e.target.value)} /></div>
         </div>

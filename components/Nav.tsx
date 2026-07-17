@@ -1,13 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
 
 export default function Nav() {
   const { t, lang, toggle } = useLang();
   const { cartCount } = useStore();
-  const s = (t as Record<string, string>);
+  const s = t as Record<string, string>;
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    { href: "/shop", label: s.nav_shop },
+    { href: "/repairs", label: s.nav_repairs },
+    { href: "/quote", label: s.nav_quote },
+    { href: "/track", label: s.nav_track },
+    { href: "/contact", label: s.nav_contact },
+  ];
 
   return (
     <nav
@@ -32,6 +43,7 @@ export default function Nav() {
       >
         <Link
           href="/"
+          onClick={() => setOpen(false)}
           className="pm-hd"
           style={{
             fontSize: 20,
@@ -42,16 +54,15 @@ export default function Nav() {
         >
           Paris Móviles
         </Link>
-        <span
-          className="pm-nav-links"
-          style={{ display: "flex", alignItems: "center", gap: 22 }}
-        >
-          <Link href="/shop">{s.nav_shop}</Link>
-          <Link href="/repairs">{s.nav_repairs}</Link>
-          <Link href="/quote">{s.nav_quote}</Link>
-          <Link href="/track">{s.nav_track}</Link>
-          <Link href="/contact">{s.nav_contact}</Link>
+
+        <span className="pm-nav-links" style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          {links.map((l) => (
+            <Link key={l.href} href={l.href}>
+              {l.label}
+            </Link>
+          ))}
         </span>
+
         <button
           type="button"
           onClick={toggle}
@@ -61,20 +72,43 @@ export default function Nav() {
         >
           {lang === "en" ? "ES" : "EN"}
         </button>
+
         <Link
           href="/cart"
+          onClick={() => setOpen(false)}
           className="pm-hd"
-          style={{ fontSize: 13, letterSpacing: "0.05em", color: "var(--color-text)" }}
+          style={{ fontSize: 13, letterSpacing: "0.05em", color: "var(--color-text)", whiteSpace: "nowrap" }}
         >
           {s.nav_cart} · {cartCount}
         </Link>
+
         <Link
           href="/admin"
-          style={{
-            fontSize: 11,
-            color: "color-mix(in srgb, var(--color-text) 45%, transparent)",
-          }}
+          className="pm-nav-admin"
+          style={{ fontSize: 11, color: "color-mix(in srgb, var(--color-text) 45%, transparent)" }}
         >
+          {s.nav_admin}
+        </Link>
+
+        <button
+          type="button"
+          className="pm-burger"
+          onClick={() => setOpen((o) => !o)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          {open ? <X size={20} strokeWidth={1.8} /> : <Menu size={20} strokeWidth={1.8} />}
+        </button>
+      </div>
+
+      {/* Mobile dropdown menu */}
+      <div className={`pm-mobile-menu${open ? " open" : ""}`}>
+        {links.map((l) => (
+          <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>
+            {l.label}
+          </Link>
+        ))}
+        <Link href="/admin" onClick={() => setOpen(false)}>
           {s.nav_admin}
         </Link>
       </div>

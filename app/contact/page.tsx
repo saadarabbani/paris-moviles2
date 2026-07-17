@@ -16,7 +16,7 @@ export default function ContactPage() {
       <h1 className="pm-hd" style={{ fontSize: 48, margin: "0 0 32px" }}>{s.contact_h}</h1>
 
       <div className="pm-grid-2" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 48 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, alignContent: "start" }}>
+        <div className="pm-fields" style={{ gap: 28, alignContent: "start" }}>
           <div>
             <div className="pm-kick" style={{ fontSize: 12 }}>{s.c_address}</div>
             <div style={{ fontSize: 15, marginTop: 6, color: "color-mix(in srgb, var(--color-text) 80%, transparent)" }}>

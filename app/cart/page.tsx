@@ -39,7 +39,9 @@ export default function CartPage() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 18,
+                    gap: 14,
+                    rowGap: 10,
+                    flexWrap: "wrap",
                     padding: "18px 0",
                     borderBottom: "1px solid var(--color-divider)",
                   }}

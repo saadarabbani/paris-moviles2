@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import Nav from "@/components/Nav";
@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   title: "Paris Móviles — Phone shop & repairs",
   description:
     "Mobile phone shop and repair service. Screens, batteries, accessories and electronics — repairs in under 30 minutes with a 12-month warranty.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
