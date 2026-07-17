@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-ad8639b7-f1c2-4005-8dd1-e07250445632/styles.css">
+<script src="_ds/industry-ad8639b7-f1c2-4005-8dd1-e07250445632/_ds_bundle.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); }
+  a { color: var(--color-accent); text-decoration: none; cursor: pointer; }
+  a:hover { color: var(--color-accent-700); }
+  .pm-corner { position: absolute; width: 15px; height: 15px; color: color-mix(in srgb, var(--color-text) 55%, transparent); pointer-events: none; }
+  .pm-corner::before { content:""; position:absolute; left:7px; top:0; width:1px; height:100%; background: currentColor; }
+  .pm-corner::after  { content:""; position:absolute; top:7px; left:0; width:100%; height:1px; background: currentColor; }
+  .pm-corner.tl { top:-8px; left:-8px; } .pm-corner.tr { top:-8px; right:-8px; }
+  .pm-corner.bl { bottom:-8px; left:-8px; } .pm-corner.br { bottom:-8px; right:-8px; }
+  .pm-shot { position: relative; overflow: hidden; background: var(--color-surface);
+    background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--color-text) 5%, transparent) 0 14px, transparent 14px 28px);
+    display: flex; align-items: center; justify-content: center; }
+  .pm-shot span { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.02em; color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+  .pm-nav a { font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:var(--color-text); }
+  .pm-nav a:hover { color: var(--color-accent); }
+  .pm-hd { font-family:var(--font-heading); font-weight:600; letter-spacing:0.02em; text-transform:uppercase; }
+  .pm-kick { font-family:var(--font-heading); font-weight:600; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-accent-700); }
+  .pm-frame { position:relative; border:1px solid var(--color-divider); }
+  .pm-chip { font-family:var(--font-heading); font-weight:600; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; padding:8px 14px; border:1px solid var(--color-divider); cursor:pointer; background:transparent; color:var(--color-text); }
+  .pm-chip.on { background:var(--color-accent); color:var(--color-bg); border-color:var(--color-accent); }
+  .pm-wa { position:fixed; right:26px; bottom:26px; z-index:50; width:56px; height:56px; border-radius:50%; background:#25D366; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-lg); cursor:pointer; border:none; }
+  .pm-in { animation: pmfade .28s ease; }
+  @keyframes pmfade { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:none; } }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"><rect width="320" height="320" fill="#5980a6"/><rect x="96" y="96" width="128" height="128" fill="none" stroke="#f2f2f3" stroke-width="6"/><text x="160" y="182" font-family="Barlow Condensed, sans-serif" font-size="84" font-weight="600" fill="#f2f2f3" text-anchor="middle">PM</text></svg></template>
+<div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
+
+  <!-- ══════════ NAV ══════════ -->
+  <nav class="pm-nav" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--color-divider);">
+    <div style="display:flex; align-items:center; gap:22px; max-width:1240px; margin:0 auto; padding:16px 40px;">
+      <span class="pm-hd" onClick="{{ goHome }}" style="font-size:20px; letter-spacing:0.04em; margin-right:auto; cursor:pointer;">Paris Móviles</span>
+      <a onClick="{{ goShop }}">{{ t.nav_shop }}</a>
+      <a onClick="{{ goRepairs }}">{{ t.nav_repairs }}</a>
+      <a onClick="{{ goQuote }}">{{ t.nav_quote }}</a>
+      <a onClick="{{ goTrack }}">{{ t.nav_track }}</a>
+      <a onClick="{{ goContact }}">{{ t.nav_contact }}</a>
+      <button type="button" onClick="{{ toggleLang }}" class="pm-chip" style="padding:6px 11px;">{{ langLabel }}</button>
+      <a onClick="{{ goCart }}" class="pm-hd" style="font-size:13px; letter-spacing:0.05em;">{{ t.nav_cart }} · {{ cartCount }}</a>
+      <a onClick="{{ goAdmin }}" style="font-size:11px; color:color-mix(in srgb, var(--color-text) 45%, transparent);">{{ t.nav_admin }}</a>
+    </div>
+  </nav>
+
+  <!-- ══════════ HOME ══════════ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div class="pm-in">
+    <section style="max-width:1240px; margin:0 auto; padding:56px 40px 64px; display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:56px; align-items:center;">
+      <div>
+        <div class="pm-kick" style="margin-bottom:12px;">{{ t.home_eyebrow }}</div>
+        <hr style="height:1px; border:0; margin:0 0 26px; background:var(--color-divider);">
+        <h1 class="pm-hd" style="font-size:72px; line-height:0.98; letter-spacing:0.005em; margin:0;">{{ t.home_title }}</h1>
+        <p style="font-size:17px; line-height:1.6; max-width:52ch; margin:26px 0 0; color:color-mix(in srgb, var(--color-text) 82%, transparent);">{{ t.home_sub }}</p>
+        <div style="display:flex; gap:14px; margin-top:34px;">
+          <button type="button" onClick="{{ goBooking }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 26px;">{{ t.home_cta1 }}</button>
+          <button type="button" onClick="{{ goShop }}" class="btn btn-secondary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 26px;">{{ t.home_cta2 }}</button>
+        </div>
+      </div>
+      <figure class="pm-frame" style="margin:0; aspect-ratio:4/5;">
+        <div class="pm-shot" style="width:100%; height:100%;"><span>storefront photo</span></div>
+        <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      </figure>
+    </section>
+
+    <section style="background:var(--color-accent-900); color:var(--color-bg);">
+      <div style="max-width:1240px; margin:0 auto; padding:48px 40px; display:grid; grid-template-columns:repeat(4,1fr); gap:32px;">
+        <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4">
+          <div><div class="pm-hd" style="font-size:52px; line-height:1;">{{ st.n }}</div><div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-top:8px; color:color-mix(in srgb, var(--color-bg) 60%, transparent);">{{ st.l }}</div></div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1240px; margin:0 auto; padding:72px 40px 8px;">
+      <div class="pm-kick">{{ t.home_featured }}</div>
+      <hr style="height:1px; border:0; margin:12px 0 0; background:var(--color-divider);">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:22px;">
+        <h2 class="pm-hd" style="font-size:38px; margin:0;">{{ t.home_featured_h }}</h2>
+        <a onClick="{{ goShop }}" class="pm-hd" style="font-size:13px; letter-spacing:0.06em;">{{ t.view_all }} →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:22px; margin-top:32px;">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+          <div class="pm-frame" onClick="{{ p.open }}" style="cursor:pointer;">
+            <div class="pm-shot" style="height:200px;"><span>{{ p.name }}</span></div>
+            <div style="padding:15px 17px;">
+              <div class="pm-hd" style="font-size:16px;">{{ p.name }}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+                <span class="pm-hd" style="font-size:17px;">{{ p.priceLabel }}</span>
+                <button type="button" onClick="{{ p.add }}" class="btn btn-primary pm-hd" style="font-size:11px; letter-spacing:0.06em; padding:7px 14px;">{{ t.add }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1240px; margin:0 auto; padding:56px 40px;">
+      <div class="pm-frame" style="padding:52px; background:var(--color-accent-900); color:var(--color-bg);">
+        <i class="pm-corner tl" style="color:color-mix(in srgb, var(--color-bg) 45%, transparent);"></i><i class="pm-corner tr" style="color:color-mix(in srgb, var(--color-bg) 45%, transparent);"></i><i class="pm-corner bl" style="color:color-mix(in srgb, var(--color-bg) 45%, transparent);"></i><i class="pm-corner br" style="color:color-mix(in srgb, var(--color-bg) 45%, transparent);"></i>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center;">
+          <div>
+            <div class="pm-hd" style="font-size:13px; letter-spacing:0.12em; color:color-mix(in srgb, var(--color-bg) 70%, transparent);">{{ t.home_book_kick }}</div>
+            <h2 class="pm-hd" style="font-size:36px; margin:14px 0 0; line-height:1.05;">{{ t.home_book_h }}</h2>
+            <p style="font-size:15px; line-height:1.6; margin:16px 0 0; max-width:40ch; color:color-mix(in srgb, var(--color-bg) 75%, transparent);">{{ t.home_book_sub }}</p>
+            <button type="button" onClick="{{ goBooking }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 26px; margin-top:26px; background:var(--color-bg); color:var(--color-accent-900); border-color:var(--color-bg);">{{ t.home_cta1 }} →</button>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ steps }}" as="sp" hint-placeholder-count="3">
+              <div style="display:flex; gap:16px; align-items:center; border:1px solid color-mix(in srgb, var(--color-bg) 22%, transparent); padding:18px;"><div class="pm-hd" style="font-size:19px; width:34px; height:34px; flex:none; display:flex; align-items:center; justify-content:center; background:var(--color-bg); color:var(--color-accent-900);">{{ sp.n }}</div><div><div class="pm-hd" style="font-size:16px;">{{ sp.t }}</div><div style="font-size:13px; color:color-mix(in srgb, var(--color-bg) 65%, transparent);">{{ sp.d }}</div></div></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1240px; margin:0 auto; padding:8px 40px 40px;">
+      <div class="pm-kick">{{ t.home_reviews_kick }}</div>
+      <hr style="height:1px; border:0; margin:12px 0 0; background:var(--color-divider);">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:32px;">
+        <sc-for list="{{ homeReviews }}" as="r" hint-placeholder-count="3">
+          <div class="pm-frame" style="padding:26px;">
+            <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+            <div style="color:var(--color-accent); letter-spacing:0.1em;">★★★★★</div>
+            <p class="pm-hd" style="font-size:19px; line-height:1.3; margin:12px 0 0; text-transform:none;">{{ r.text }}</p>
+            <div style="font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent); margin-top:16px;">{{ r.author }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:22px; font-size:13px; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.home_google }}</div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ══════════ SHOP ══════════ -->
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ true }}">
+  <section class="pm-in" style="max-width:1240px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.shop_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <h1 class="pm-hd" style="font-size:44px; margin:0 0 26px;">{{ t.shop_h }}</h1>
+    <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:26px;">
+      <input class="input" value="{{ shopSearch }}" onInput="{{ setSearch }}" placeholder="{{ t.shop_search }}" style="max-width:260px;">
+      <div style="display:flex; gap:8px;">
+        <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+          <button type="button" onClick="{{ c.pick }}" class="pm-chip {{ c.cls }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <select class="input" value="{{ shopSort }}" onChange="{{ setSort }}" style="max-width:180px; margin-left:auto;">
+        <option value="featured">{{ t.sort_featured }}</option>
+        <option value="low">{{ t.sort_low }}</option>
+        <option value="high">{{ t.sort_high }}</option>
+      </select>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:22px;">
+      <sc-for list="{{ shopList }}" as="p" hint-placeholder-count="8">
+        <div class="pm-frame">
+          <div class="pm-shot" onClick="{{ p.open }}" style="height:200px; cursor:pointer;">
+            <sc-if value="{{ p.tag }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; top:10px; left:10px; font-family:var(--font-heading); font-weight:600; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; background:var(--color-accent); color:var(--color-bg); padding:4px 9px;">{{ p.tag }}</span></sc-if>
+            <span>{{ p.name }}</span>
+          </div>
+          <div style="padding:15px 17px;">
+            <div class="pm-hd" style="font-size:16px;">{{ p.name }}</div>
+            <div style="font-size:12px; letter-spacing:0.04em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent); margin-top:4px;">{{ p.cat }}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+              <span class="pm-hd" style="font-size:17px;">{{ p.priceLabel }}</span>
+              <button type="button" onClick="{{ p.add }}" class="btn btn-primary pm-hd" style="font-size:11px; letter-spacing:0.06em; padding:7px 14px;">{{ t.add }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ shopEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:40px 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.shop_empty }}</div></sc-if>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ PRODUCT ══════════ -->
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:1240px; margin:0 auto; padding:40px 40px 64px;">
+    <a onClick="{{ goShop }}" class="pm-hd" style="font-size:12px; letter-spacing:0.06em;">← {{ t.back_shop }}</a>
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:52px; margin-top:24px;">
+      <div>
+        <figure class="pm-frame" style="margin:0; aspect-ratio:1/1;">
+          <div class="pm-shot" style="width:100%; height:100%;"><span>{{ product.name }}</span></div>
+          <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+        </figure>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px;">
+          <div class="pm-shot pm-frame" style="height:70px;"><span>1</span></div>
+          <div class="pm-shot pm-frame" style="height:70px;"><span>2</span></div>
+          <div class="pm-shot pm-frame" style="height:70px;"><span>3</span></div>
+          <div class="pm-shot pm-frame" style="height:70px;"><span>4</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="pm-kick">{{ product.cat }}</div>
+        <h1 class="pm-hd" style="font-size:40px; margin:10px 0 0;">{{ product.name }}</h1>
+        <div class="pm-hd" style="font-size:30px; margin-top:16px; color:var(--color-accent-700);">{{ product.priceLabel }}</div>
+        <p style="font-size:15px; line-height:1.6; margin:20px 0 0; color:color-mix(in srgb, var(--color-text) 80%, transparent);">{{ product.blurb }}</p>
+        <div style="display:flex; gap:14px; margin-top:28px;">
+          <button type="button" onClick="{{ addCurrent }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 28px;">{{ t.add_cart }}</button>
+          <button type="button" onClick="{{ buyNow }}" class="btn btn-secondary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 28px;">{{ t.buy_now }}</button>
+        </div>
+        <div style="margin-top:32px; border-top:1px solid var(--color-divider); padding-top:24px;">
+          <div class="pm-kick" style="margin-bottom:14px;">{{ t.reviews }}</div>
+          <sc-for list="{{ productReviews }}" as="r" hint-placeholder-count="2">
+            <div style="margin-bottom:16px;">
+              <div style="color:var(--color-accent); letter-spacing:0.1em; font-size:13px;">★★★★★</div>
+              <p style="font-size:14px; line-height:1.5; margin:6px 0 2px;">{{ r.text }}</p>
+              <div style="font-size:12px; color:color-mix(in srgb, var(--color-text) 50%, transparent);">{{ r.author }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:56px;">
+      <div class="pm-kick">{{ t.related }}</div>
+      <hr style="height:1px; border:0; margin:12px 0 24px; background:var(--color-divider);">
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:22px;">
+        <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
+          <div class="pm-frame" onClick="{{ p.open }}" style="cursor:pointer;">
+            <div class="pm-shot" style="height:170px;"><span>{{ p.name }}</span></div>
+            <div style="padding:14px 16px;"><div class="pm-hd" style="font-size:15px;">{{ p.name }}</div><div class="pm-hd" style="font-size:15px; margin-top:8px;">{{ p.priceLabel }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ CART ══════════ -->
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:900px; margin:0 auto; padding:48px 40px 64px;">
+    <h1 class="pm-hd" style="font-size:44px; margin:0 0 24px;">{{ t.cart_h }}</h1>
+    <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:40px 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.cart_empty }} <a onClick="{{ goShop }}">{{ t.shop_h }} →</a></div>
+    </sc-if>
+    <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ false }}">
+    <div class="pm-frame" style="padding:8px 24px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+        <div style="display:flex; align-items:center; gap:18px; padding:18px 0; border-bottom:1px solid var(--color-divider);">
+          <div class="pm-shot pm-frame" style="width:64px; height:64px; flex:none;"></div>
+          <div style="flex:1;"><div class="pm-hd" style="font-size:16px;">{{ l.name }}</div><div style="font-size:13px; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ l.priceLabel }}</div></div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button type="button" onClick="{{ l.dec }}" class="pm-chip" style="padding:4px 11px;">−</button>
+            <span class="pm-hd" style="min-width:24px; text-align:center;">{{ l.qty }}</span>
+            <button type="button" onClick="{{ l.inc }}" class="pm-chip" style="padding:4px 11px;">+</button>
+          </div>
+          <div class="pm-hd" style="font-size:16px; min-width:80px; text-align:right;">{{ l.lineLabel }}</div>
+          <a onClick="{{ l.remove }}" style="font-size:12px; color:color-mix(in srgb, var(--color-text) 45%, transparent);">✕</a>
+        </div>
+      </sc-for>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
+        <span class="pm-hd" style="font-size:18px;">{{ t.total }}</span>
+        <span class="pm-hd" style="font-size:24px; color:var(--color-accent-700);">{{ cartTotalLabel }}</span>
+      </div>
+    </div>
+    <button type="button" onClick="{{ goCheckout }}" class="btn btn-primary btn-block pm-hd" style="font-size:15px; letter-spacing:0.06em; padding:16px; margin-top:20px;">{{ t.checkout }} →</button>
+    </sc-if>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ CHECKOUT ══════════ -->
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:760px; margin:0 auto; padding:48px 40px 64px;">
+    <h1 class="pm-hd" style="font-size:40px; margin:0 0 8px;">{{ t.checkout_h }}</h1>
+    <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 28px;">{{ t.checkout_sub }}</p>
+    <div class="pm-frame" style="padding:32px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <div class="field"><label>{{ t.f_name }}</label><input class="input" value="{{ coName }}" onInput="{{ setCoName }}"></div>
+        <div class="field"><label>{{ t.f_phone }}</label><input class="input" value="{{ coPhone }}" onInput="{{ setCoPhone }}"></div>
+      </div>
+      <div style="margin-top:20px;">
+        <div class="field" style="margin-bottom:10px;"><label>{{ t.f_fulfil }}</label></div>
+        <div style="display:flex; gap:12px;">
+          <button type="button" onClick="{{ setPickup }}" class="pm-chip {{ pickupCls }}">{{ t.f_pickup }}</button>
+          <button type="button" onClick="{{ setDelivery }}" class="pm-chip {{ deliveryCls }}">{{ t.f_delivery }}</button>
+        </div>
+      </div>
+      <sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+        <div class="field" style="margin-top:18px;"><label>{{ t.f_address }}</label><input class="input" value="{{ coAddr }}" onInput="{{ setCoAddr }}"></div>
+      </sc-if>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:20px; border-top:1px solid var(--color-divider);">
+        <span class="pm-hd" style="font-size:16px;">{{ t.total }} · {{ t.f_cash }}</span>
+        <span class="pm-hd" style="font-size:22px; color:var(--color-accent-700);">{{ cartTotalLabel }}</span>
+      </div>
+    </div>
+    <button type="button" onClick="{{ placeOrder }}" class="btn btn-primary btn-block pm-hd" style="font-size:15px; letter-spacing:0.06em; padding:16px; margin-top:20px;">{{ t.place_order }}</button>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ CONFIRMATION ══════════ -->
+  <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:640px; margin:0 auto; padding:80px 40px; text-align:center;">
+    <div class="pm-frame" style="padding:52px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <div class="pm-kick">{{ t.confirm_kick }}</div>
+      <h1 class="pm-hd" style="font-size:38px; margin:14px 0 0;">{{ t.confirm_h }}</h1>
+      <div class="pm-hd" style="font-size:40px; margin:24px 0; color:var(--color-accent-700);">{{ lastOrderNum }}</div>
+      <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); margin:0 auto; max-width:42ch;">{{ t.confirm_sub }}</p>
+      <button type="button" onClick="{{ goShop }}" class="btn btn-secondary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:13px 26px; margin-top:28px;">{{ t.keep_shopping }}</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ REPAIRS ══════════ -->
+  <sc-if value="{{ isRepairs }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:1240px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.rep_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:end;">
+      <h1 class="pm-hd" style="font-size:52px; margin:0;">{{ t.rep_h }}</h1>
+      <p style="font-size:16px; line-height:1.6; margin:0; color:color-mix(in srgb, var(--color-text) 80%, transparent);">{{ t.rep_sub }}</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:40px;">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+        <div class="pm-frame" style="padding:26px;">
+          <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+          <div class="pm-hd" style="font-size:20px;">{{ s.t }}</div>
+          <p style="font-size:14px; line-height:1.55; margin:10px 0 0; color:color-mix(in srgb, var(--color-text) 75%, transparent);">{{ s.d }}</p>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:16px; border-top:1px solid var(--color-divider);">
+            <span class="pm-hd" style="font-size:15px; color:var(--color-accent-700);">{{ s.p }}</span>
+            <span style="font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent);">{{ s.w }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:22px; margin-top:40px;">
+      <sc-for list="{{ process }}" as="pr" hint-placeholder-count="4">
+        <div><div class="pm-hd" style="font-size:34px; color:var(--color-accent);">{{ pr.n }}</div><div class="pm-hd" style="font-size:16px; margin-top:8px;">{{ pr.t }}</div><p style="font-size:13px; line-height:1.5; margin:6px 0 0; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ pr.d }}</p></div>
+      </sc-for>
+    </div>
+    <div style="display:flex; gap:14px; margin-top:40px;">
+      <button type="button" onClick="{{ goQuote }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 26px;">{{ t.get_quote }}</button>
+      <button type="button" onClick="{{ goBooking }}" class="btn btn-secondary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px 26px;">{{ t.book_now }}</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ QUOTE ══════════ -->
+  <sc-if value="{{ isQuote }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:760px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.quote_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <h1 class="pm-hd" style="font-size:44px; margin:0 0 8px;">{{ t.quote_h }}</h1>
+    <p style="color:color-mix(in srgb, var(--color-text) 65%, transparent); margin:0 0 28px;">{{ t.quote_sub }}</p>
+    <div class="pm-frame" style="padding:32px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <div class="field" style="margin-bottom:16px;"><label>{{ t.q_brand }}</label>
+        <select class="input" value="{{ qBrand }}" onChange="{{ setQBrand }}"><option value="">—</option><sc-for list="{{ brands }}" as="b" hint-placeholder-count="4"><option value="{{ b }}">{{ b }}</option></sc-for></select>
+      </div>
+      <div class="field" style="margin-bottom:16px;"><label>{{ t.q_model }}</label>
+        <select class="input" value="{{ qModel }}" onChange="{{ setQModel }}"><option value="">—</option><sc-for list="{{ models }}" as="m" hint-placeholder-count="3"><option value="{{ m }}">{{ m }}</option></sc-for></select>
+      </div>
+      <div class="field"><label>{{ t.q_issue }}</label>
+        <select class="input" value="{{ qIssue }}" onChange="{{ setQIssue }}"><option value="">—</option><sc-for list="{{ issues }}" as="i" hint-placeholder-count="4"><option value="{{ i.key }}">{{ i.label }}</option></sc-for></select>
+      </div>
+      <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:24px; padding-top:22px; border-top:1px solid var(--color-divider); display:flex; justify-content:space-between; align-items:center;">
+          <div><div style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.q_estimate }}</div><div class="pm-hd" style="font-size:34px; color:var(--color-accent-700);">{{ quotePrice }}</div></div>
+          <button type="button" onClick="{{ goBooking }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:13px 24px;">{{ t.book_this }} →</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ BOOKING ══════════ -->
+  <sc-if value="{{ isBooking }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:760px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.book_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <h1 class="pm-hd" style="font-size:44px; margin:0 0 24px;">{{ t.book_h }}</h1>
+    <div class="pm-frame" style="padding:32px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <div class="field"><label>{{ t.f_name }}</label><input class="input" value="{{ bkName }}" onInput="{{ setBkName }}"></div>
+        <div class="field"><label>{{ t.f_phone }}</label><input class="input" value="{{ bkPhone }}" onInput="{{ setBkPhone }}"></div>
+        <div class="field"><label>{{ t.q_brand }}</label><select class="input" value="{{ bkBrand }}" onChange="{{ setBkBrand }}"><option value="">—</option><sc-for list="{{ brands }}" as="b" hint-placeholder-count="4"><option value="{{ b }}">{{ b }}</option></sc-for></select></div>
+        <div class="field"><label>{{ t.q_issue }}</label><select class="input" value="{{ bkIssue }}" onChange="{{ setBkIssue }}"><option value="">—</option><sc-for list="{{ issues }}" as="i" hint-placeholder-count="4"><option value="{{ i.key }}">{{ i.label }}</option></sc-for></select></div>
+      </div>
+      <div class="field" style="margin-top:18px;"><label>{{ t.b_notes }}</label><textarea class="input" value="{{ bkNotes }}" onInput="{{ setBkNotes }}"></textarea></div>
+    </div>
+    <button type="button" onClick="{{ submitBooking }}" class="btn btn-primary btn-block pm-hd" style="font-size:15px; letter-spacing:0.06em; padding:16px; margin-top:20px;">{{ t.b_submit }}</button>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ TICKET DONE ══════════ -->
+  <sc-if value="{{ isTicketDone }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:640px; margin:0 auto; padding:80px 40px; text-align:center;">
+    <div class="pm-frame" style="padding:52px;">
+      <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+      <div class="pm-kick">{{ t.ticket_kick }}</div>
+      <h1 class="pm-hd" style="font-size:36px; margin:14px 0 0;">{{ t.ticket_h }}</h1>
+      <div class="pm-hd" style="font-size:44px; margin:24px 0; color:var(--color-accent-700);">{{ lastTicketNum }}</div>
+      <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); margin:0 auto; max-width:42ch;">{{ t.ticket_sub }}</p>
+      <button type="button" onClick="{{ goTrack }}" class="btn btn-secondary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:13px 26px; margin-top:28px;">{{ t.nav_track }} →</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ TRACK ══════════ -->
+  <sc-if value="{{ isTrack }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:760px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.track_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <h1 class="pm-hd" style="font-size:44px; margin:0 0 24px;">{{ t.track_h }}</h1>
+    <div style="display:flex; gap:12px;">
+      <input class="input" value="{{ trackInput }}" onInput="{{ setTrackInput }}" placeholder="{{ t.track_ph }}" style="flex:1;">
+      <button type="button" onClick="{{ doTrack }}" class="btn btn-primary pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:0 26px;">{{ t.track_btn }}</button>
+    </div>
+    <sc-if value="{{ trackFound }}" hint-placeholder-val="{{ false }}">
+      <div class="pm-frame" style="padding:32px; margin-top:28px;">
+        <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+        <div style="display:flex; justify-content:space-between; margin-bottom:24px;">
+          <div><div style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.track_device }}</div><div class="pm-hd" style="font-size:20px;">{{ trackResult.device }}</div></div>
+          <div style="text-align:right;"><div style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.track_ticket }}</div><div class="pm-hd" style="font-size:20px;">{{ trackResult.num }}</div></div>
+        </div>
+        <sc-for list="{{ trackSteps }}" as="ts" hint-placeholder-count="5">
+          <div style="display:flex; gap:16px; align-items:center; padding:12px 0;">
+            <div style="width:14px; height:14px; flex:none; border-radius:50%; border:2px solid var(--color-accent); background:{{ ts.fill }};"></div>
+            <div class="pm-hd" style="font-size:16px; color:{{ ts.color }};">{{ ts.label }}</div>
+            <sc-if value="{{ ts.current }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent" style="margin-left:auto;">{{ t.track_now }}</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ trackMiss }}" hint-placeholder-val="{{ false }}"><div style="margin-top:24px; color:var(--color-accent-700);">{{ t.track_miss }}</div></sc-if>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section class="pm-in" style="max-width:1100px; margin:0 auto; padding:48px 40px 64px;">
+    <div class="pm-kick">{{ t.contact_kick }}</div>
+    <hr style="height:1px; border:0; margin:12px 0 22px; background:var(--color-divider);">
+    <h1 class="pm-hd" style="font-size:48px; margin:0 0 32px;">{{ t.contact_h }}</h1>
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:48px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; align-content:start;">
+        <div><div class="pm-kick" style="font-size:12px;">{{ t.c_address }}</div><div style="font-size:15px; margin-top:6px; color:color-mix(in srgb, var(--color-text) 80%, transparent);">Your street address<br>City, postcode</div></div>
+        <div><div class="pm-kick" style="font-size:12px;">{{ t.c_phone }}</div><div style="font-size:15px; margin-top:6px; color:color-mix(in srgb, var(--color-text) 80%, transparent);">+34 900 000 000</div></div>
+        <div><div class="pm-kick" style="font-size:12px;">{{ t.c_hours }}</div><div style="font-size:15px; margin-top:6px; color:color-mix(in srgb, var(--color-text) 80%, transparent);">Mon–Sat · 10:00–20:00<br>Sun · closed</div></div>
+        <div><div class="pm-kick" style="font-size:12px;">{{ t.c_email }}</div><div style="font-size:15px; margin-top:6px; color:color-mix(in srgb, var(--color-text) 80%, transparent);">hola@parismoviles.com</div></div>
+        <div style="grid-column:1/-1;" class="pm-shot pm-frame"><span style="padding:40px 0;">map</span></div>
+      </div>
+      <div class="pm-frame" style="padding:28px;">
+        <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+        <div class="field" style="margin-bottom:16px;"><label>{{ t.f_name }}</label><input class="input"></div>
+        <div class="field" style="margin-bottom:16px;"><label>{{ t.f_phone }}</label><input class="input"></div>
+        <div class="field" style="margin-bottom:16px;"><label>{{ t.c_message }}</label><textarea class="input"></textarea></div>
+        <button type="button" class="btn btn-primary btn-block pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px;">{{ t.c_send }}</button>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ══════════ ADMIN ══════════ -->
+  <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+  <div class="pm-in">
+    <sc-if value="{{ adminLocked }}" hint-placeholder-val="{{ true }}">
+      <section style="max-width:400px; margin:0 auto; padding:100px 40px;">
+        <div class="pm-frame" style="padding:36px;">
+          <i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i>
+          <div class="pm-kick">{{ t.admin_kick }}</div>
+          <h1 class="pm-hd" style="font-size:30px; margin:10px 0 22px;">{{ t.admin_login }}</h1>
+          <div class="field"><label>{{ t.admin_pass }}</label><input class="input" type="password" value="{{ adminPass }}" onInput="{{ setAdminPass }}" placeholder="admin"></div>
+          <button type="button" onClick="{{ doLogin }}" class="btn btn-primary btn-block pm-hd" style="font-size:14px; letter-spacing:0.06em; padding:14px; margin-top:16px;">{{ t.admin_enter }}</button>
+          <sc-if value="{{ adminErr }}" hint-placeholder-val="{{ false }}"><div style="color:var(--color-accent-700); font-size:13px; margin-top:12px;">{{ t.admin_wrong }}</div></sc-if>
+          <div style="font-size:12px; color:color-mix(in srgb, var(--color-text) 45%, transparent); margin-top:12px;">{{ t.admin_hint }}</div>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{ adminOpen }}" hint-placeholder-val="{{ false }}">
+      <section style="max-width:1240px; margin:0 auto; padding:40px 40px 64px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px;">
+          <h1 class="pm-hd" style="font-size:36px; margin:0;">{{ t.admin_dash }}</h1>
+          <a onClick="{{ doLogout }}" style="font-size:13px;">{{ t.admin_logout }}</a>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:32px;">
+          <sc-for list="{{ adminCounts }}" as="ac" hint-placeholder-count="4">
+            <div class="pm-frame" style="padding:22px;"><i class="pm-corner tl"></i><i class="pm-corner tr"></i><i class="pm-corner bl"></i><i class="pm-corner br"></i><div class="pm-hd" style="font-size:40px; color:var(--color-accent-700);">{{ ac.n }}</div><div style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent); margin-top:4px;">{{ ac.l }}</div></div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:8px; border-bottom:1px solid var(--color-divider); margin-bottom:28px; flex-wrap:wrap;">
+          <sc-for list="{{ adminTabs }}" as="tb" hint-placeholder-count="5">
+            <button type="button" onClick="{{ tb.pick }}" class="pm-hd" style="font-size:13px; letter-spacing:0.05em; padding:12px 18px; background:transparent; border:none; border-bottom:2px solid {{ tb.border }}; color:{{ tb.color }}; cursor:pointer;">{{ tb.label }}</button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ atOrders }}" hint-placeholder-val="{{ false }}">
+          <table class="table"><thead><tr><th>{{ t.th_order }}</th><th>{{ t.th_customer }}</th><th>{{ t.th_total }}</th><th>{{ t.th_status }}</th><th></th></tr></thead><tbody>
+            <sc-for list="{{ ordersRows }}" as="o" hint-placeholder-count="3"><tr>
+              <td class="pm-hd">{{ o.num }}</td><td>{{ o.customer }}</td><td>{{ o.total }}</td>
+              <td><span class="tag {{ o.tagCls }}">{{ o.status }}</span></td>
+              <td style="text-align:right; display:flex; gap:8px; justify-content:flex-end;"><a onClick="{{ o.advance }}" style="font-size:12px;">{{ t.a_advance }}</a><a onClick="{{ o.whatsapp }}" style="font-size:12px; color:#1a8a4a;">{{ t.a_review }}</a></td>
+            </tr></sc-for>
+          </tbody></table>
+        </sc-if>
+
+        <sc-if value="{{ atTickets }}" hint-placeholder-val="{{ false }}">
+          <table class="table"><thead><tr><th>{{ t.th_ticket }}</th><th>{{ t.th_device }}</th><th>{{ t.th_issue }}</th><th>{{ t.th_status }}</th><th></th></tr></thead><tbody>
+            <sc-for list="{{ ticketRows }}" as="k" hint-placeholder-count="3"><tr>
+              <td class="pm-hd">{{ k.num }}</td><td>{{ k.device }}</td><td>{{ k.issue }}</td>
+              <td><span class="tag {{ k.tagCls }}">{{ k.status }}</span></td>
+              <td style="text-align:right; display:flex; gap:8px; justify-content:flex-end;"><a onClick="{{ k.advance }}" style="font-size:12px;">{{ t.a_advance }}</a><a onClick="{{ k.whatsapp }}" style="font-size:12px; color:#1a8a4a;">{{ t.a_review }}</a></td>
+            </tr></sc-for>
+          </tbody></table>
+        </sc-if>
+
+        <sc-if value="{{ atProducts }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; align-items:flex-end;">
+            <div class="field"><label>{{ t.p_name_en }}</label><input class="input" value="{{ npName }}" onInput="{{ setNpName }}" style="width:200px;"></div>
+            <div class="field"><label>{{ t.p_price }}</label><input class="input" value="{{ npPrice }}" onInput="{{ setNpPrice }}" style="width:110px;"></div>
+            <button type="button" onClick="{{ addProduct }}" class="btn btn-primary pm-hd" style="font-size:13px; padding:9px 18px;">{{ t.p_add }}</button>
+          </div>
+          <table class="table"><thead><tr><th>{{ t.th_product }}</th><th>{{ t.th_cat }}</th><th>{{ t.th_price }}</th><th></th></tr></thead><tbody>
+            <sc-for list="{{ productRows }}" as="p" hint-placeholder-count="4"><tr>
+              <td class="pm-hd">{{ p.name }}</td><td>{{ p.cat }}</td><td>{{ p.price }}</td>
+              <td style="text-align:right;"><a onClick="{{ p.del }}" style="font-size:12px; color:var(--color-accent-700);">{{ t.a_delete }}</a></td>
+            </tr></sc-for>
+          </tbody></table>
+        </sc-if>
+
+        <sc-if value="{{ atPrices }}" hint-placeholder-val="{{ false }}">
+          <table class="table"><thead><tr><th>{{ t.th_issue }}</th><th>{{ t.th_price }}</th><th></th></tr></thead><tbody>
+            <sc-for list="{{ priceRows }}" as="pr" hint-placeholder-count="4"><tr>
+              <td class="pm-hd">{{ pr.label }}</td>
+              <td><input class="input" value="{{ pr.price }}" onInput="{{ pr.edit }}" style="width:110px;"></td>
+              <td></td>
+            </tr></sc-for>
+          </tbody></table>
+        </sc-if>
+
+        <sc-if value="{{ atReviews }}" hint-placeholder-val="{{ false }}">
+          <table class="table"><thead><tr><th>{{ t.th_author }}</th><th>{{ t.th_review }}</th><th>{{ t.th_status }}</th><th></th></tr></thead><tbody>
+            <sc-for list="{{ reviewRows }}" as="r" hint-placeholder-count="4"><tr>
+              <td class="pm-hd">{{ r.author }}</td><td style="max-width:360px;">{{ r.text }}</td>
+              <td><span class="tag {{ r.tagCls }}">{{ r.status }}</span></td>
+              <td style="text-align:right; display:flex; gap:10px; justify-content:flex-end;"><a onClick="{{ r.approve }}" style="font-size:12px;">{{ t.a_approve }}</a><a onClick="{{ r.hide }}" style="font-size:12px;">{{ t.a_hide }}</a><a onClick="{{ r.del }}" style="font-size:12px; color:var(--color-accent-700);">{{ t.a_delete }}</a></td>
+            </tr></sc-for>
+          </tbody></table>
+        </sc-if>
+      </section>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer style="border-top:1px solid var(--color-divider); margin-top:40px;">
+    <div style="max-width:1240px; margin:0 auto; padding:32px 40px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); flex-wrap:wrap; gap:12px;">
+      <span class="pm-hd" style="letter-spacing:0.04em; color:var(--color-text);">Paris Móviles</span>
+      <span>{{ t.footer }}</span>
+    </div>
+  </footer>
+
+  <button type="button" onClick="{{ openWhatsApp }}" class="pm-wa" title="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.95 1.34-.5.05-1.14.24-3.68-.77-3.1-1.22-5.09-4.37-5.24-4.57-.15-.2-1.26-1.68-1.26-3.2 0-1.52.8-2.27 1.08-2.58.28-.31.61-.39.81-.39.2 0 .41 0 .59.01.19.01.44-.07.69.53.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.36 1.46.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.71.81 2 .96.29.15.49.22.56.34.07.13.07.72-.17 1.4z"/></svg>
+  </button>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const savedCart = (() => { try { return JSON.parse(localStorage.getItem("pm_cart") || "[]"); } catch (e) { return []; } })();
+    this.state = {
+      route: "home", lang: "en", cart: savedCart, currentId: null,
+      shopSearch: "", shopCat: "all", shopSort: "featured",
+      coName: "", coPhone: "", coFulfill: "pickup", coAddr: "", lastOrderNum: "",
+      qBrand: "", qModel: "", qIssue: "",
+      bkName: "", bkPhone: "", bkBrand: "", bkIssue: "", bkNotes: "", lastTicketNum: "",
+      trackInput: "", trackNum: null, trackTried: false,
+      adminAuthed: false, adminPass: "", adminErr: false, adminTab: "orders",
+      npName: "", npPrice: "",
+      prices: { screen: 49, battery: 39, water: 59, port: 29, unlock: 19, data: 59 },
+      products: [
+        { id: 1, cat: "phones", en: "iPhone 13 (refurb)", es: "iPhone 13 (reacond.)", price: 429, tag: { en: "", es: "" } },
+        { id: 2, cat: "phones", en: "Galaxy A54", es: "Galaxy A54", price: 329, tag: { en: "New", es: "Nuevo" } },
+        { id: 3, cat: "accessories", en: "Leather case", es: "Funda de piel", price: 24.9, tag: { en: "", es: "" } },
+        { id: 4, cat: "accessories", en: "Tempered glass", es: "Cristal templado", price: 12.9, tag: { en: "Sale", es: "Oferta" } },
+        { id: 5, cat: "audio", en: "Wireless earbuds", es: "Auriculares inalámbricos", price: 49.9, tag: { en: "Popular", es: "Popular" } },
+        { id: 6, cat: "audio", en: "Over-ear headphones", es: "Auriculares de diadema", price: 79.9, tag: { en: "", es: "" } },
+        { id: 7, cat: "electronics", en: "65W GaN charger", es: "Cargador GaN 65W", price: 34.9, tag: { en: "", es: "" } },
+        { id: 8, cat: "electronics", en: "Power bank 20K", es: "Batería externa 20K", price: 29.9, tag: { en: "", es: "" } },
+      ],
+      orders: [
+        { num: "ORD-2041", customer: "Marco T.", total: 74.8, status: 1 },
+        { num: "ORD-2042", customer: "Elena R.", total: 429, status: 0 },
+        { num: "ORD-2043", customer: "Luis P.", total: 49.9, status: 2 },
+      ],
+      tickets: [
+        { num: "REP-5107", device: "iPhone 13", issue: "screen", status: 2 },
+        { num: "REP-5108", device: "Galaxy S22", issue: "battery", status: 1 },
+        { num: "REP-5109", device: "Pixel 7", issue: "water", status: 3 },
+      ],
+      reviews: [
+        { id: 1, author: "Marco T.", text: "Screen replaced in 25 minutes and it looks brand new.", status: "approved" },
+        { id: 2, author: "Elena R.", text: "Dropped my phone in the pool — working the same afternoon.", status: "approved" },
+        { id: 3, author: "Aisha K.", text: "Honest, fast and friendly. My go-to shop.", status: "approved" },
+        { id: 4, author: "Nuria B.", text: "Bought a charger and got a battery swap same visit.", status: "pending" },
+      ],
+    };
+  }
+
+  DICT() {
+    return {
+      en: {
+        nav_shop:"Shop", nav_repairs:"Repairs", nav_quote:"Quote", nav_track:"Track", nav_contact:"Contact", nav_cart:"Cart", nav_admin:"Admin",
+        home_eyebrow:"Est. 2011 · Certified technicians", home_title:"Your phone, fixed properly.", home_sub:"Repairs in under 30 minutes, genuine-grade parts and a 12-month warranty — plus a curated shop of phones, accessories and electronics.",
+        home_cta1:"Book a repair", home_cta2:"Shop accessories", home_featured:"The shop", home_featured_h:"Featured products", view_all:"View all", add:"Add",
+        home_book_kick:"Book in three steps", home_book_h:"Broken screen? We'll fix it today.", home_book_sub:"Pick your device, tell us the issue, choose a time. Most repairs done while you wait.",
+        home_reviews_kick:"What customers say", home_google:"★ 4.9 from 2,300+ Google reviews · updated daily",
+        shop_kick:"Store", shop_h:"Shop", shop_search:"Search products…", sort_featured:"Featured", sort_low:"Price: low to high", sort_high:"Price: high to low", shop_empty:"No products match your filters.",
+        back_shop:"Back to shop", add_cart:"Add to cart", buy_now:"Buy now", reviews:"Reviews", related:"Related products",
+        cart_h:"Your cart", cart_empty:"Your cart is empty.", total:"Total", checkout:"Checkout",
+        checkout_h:"Checkout", checkout_sub:"No online payment — pay cash on pickup or delivery.", f_name:"Full name", f_phone:"Phone", f_fulfil:"Fulfilment", f_pickup:"Pickup in store", f_delivery:"Local delivery", f_address:"Delivery address", f_cash:"Cash on pickup/delivery", place_order:"Place order",
+        confirm_kick:"Order received", confirm_h:"Thank you!", confirm_sub:"We'll call you to confirm. Pay cash when you collect or receive your order.", keep_shopping:"Keep shopping",
+        rep_kick:"Repairs", rep_h:"We fix it all.", rep_sub:"Screens, batteries, water damage, charging, unlocking and data recovery — most done same day, all backed by a 12-month warranty.", get_quote:"Get an instant quote", book_now:"Book a repair",
+        quote_kick:"Instant quote", quote_h:"Get a price now.", quote_sub:"Choose your device and issue for an instant estimate.", q_brand:"Brand", q_model:"Model", q_issue:"Issue", q_estimate:"Estimated price", book_this:"Book this repair",
+        book_kick:"Booking", book_h:"Book a repair", b_notes:"Notes (optional)", b_submit:"Confirm booking", ticket_kick:"Booking confirmed", ticket_h:"Your ticket number", ticket_sub:"Keep this number to track your repair status anytime.",
+        track_kick:"Track", track_h:"Track your repair", track_ph:"e.g. REP-5107", track_btn:"Track", track_device:"Device", track_ticket:"Ticket", track_now:"Now", track_miss:"No repair found with that ticket number.",
+        contact_kick:"Contact", contact_h:"Come in, or reach us.", c_address:"Address", c_phone:"Phone", c_hours:"Hours", c_email:"Email", c_message:"Message", c_send:"Send message",
+        admin_kick:"Staff only", admin_login:"Admin login", admin_pass:"Password", admin_enter:"Enter", admin_wrong:"Wrong password.", admin_hint:"Demo password: admin", admin_dash:"Dashboard", admin_logout:"Log out",
+        th_order:"Order", th_customer:"Customer", th_total:"Total", th_status:"Status", th_ticket:"Ticket", th_device:"Device", th_issue:"Issue", th_product:"Product", th_cat:"Category", th_price:"Price", th_author:"Author", th_review:"Review",
+        a_advance:"Advance", a_review:"Request review", a_delete:"Delete", a_approve:"Approve", a_hide:"Hide",
+        p_name_en:"Name", p_price:"Price €", p_add:"Add product",
+        footer:"Repairs · Accessories · Since 2011",
+        issues:{ screen:"Screen replacement", battery:"Battery replacement", water:"Water damage", port:"Charging port", unlock:"Network unlock", data:"Data recovery" },
+        cats:{ all:"All", phones:"Phones", accessories:"Accessories", audio:"Audio", electronics:"Electronics" },
+        ostat:["Pending","Confirmed","Ready","Completed"], kstat:["Received","Diagnosing","Repairing","Ready","Completed"],
+        svc:[{t:"Screen replacement",d:"Cracked, black or ghost-touch displays restored to factory clarity.",w:"~30 min"},{t:"Battery service",d:"New cells for phones that drain too fast.",w:"~25 min"},{t:"Water damage",d:"Diagnostics and board-level cleaning.",w:"1–2 hrs"},{t:"Charging ports",d:"Loose or dead ports fixed same day.",w:"~30 min"},{t:"Network unlocking",d:"All major carriers, safely and legally.",w:"same day"},{t:"Data recovery",d:"Photos and files rescued from dead devices.",w:"quoted"}],
+        proc:[{t:"Bring it in",d:"Walk in or book online — no appointment needed."},{t:"Free diagnosis",d:"We inspect and quote before any work starts."},{t:"We repair",d:"Most repairs done while you wait."},{t:"12-mo warranty",d:"Every repair backed for a full year."}],
+      },
+      es: {
+        nav_shop:"Tienda", nav_repairs:"Reparaciones", nav_quote:"Presupuesto", nav_track:"Seguimiento", nav_contact:"Contacto", nav_cart:"Cesta", nav_admin:"Admin",
+        home_eyebrow:"Desde 2011 · Técnicos certificados", home_title:"Tu móvil, reparado bien.", home_sub:"Reparaciones en menos de 30 minutos, piezas de calidad original y 12 meses de garantía — además de una tienda de móviles, accesorios y electrónica.",
+        home_cta1:"Reservar reparación", home_cta2:"Ver accesorios", home_featured:"La tienda", home_featured_h:"Productos destacados", view_all:"Ver todo", add:"Añadir",
+        home_book_kick:"Reserva en tres pasos", home_book_h:"¿Pantalla rota? La arreglamos hoy.", home_book_sub:"Elige tu dispositivo, cuéntanos el problema y elige una hora. La mayoría se reparan al momento.",
+        home_reviews_kick:"Lo que dicen los clientes", home_google:"★ 4,9 de más de 2.300 reseñas de Google · actualizado a diario",
+        shop_kick:"Tienda", shop_h:"Tienda", shop_search:"Buscar productos…", sort_featured:"Destacados", sort_low:"Precio: menor a mayor", sort_high:"Precio: mayor a menor", shop_empty:"Ningún producto coincide.",
+        back_shop:"Volver a la tienda", add_cart:"Añadir a la cesta", buy_now:"Comprar ya", reviews:"Reseñas", related:"Productos relacionados",
+        cart_h:"Tu cesta", cart_empty:"Tu cesta está vacía.", total:"Total", checkout:"Finalizar compra",
+        checkout_h:"Finalizar compra", checkout_sub:"Sin pago online — paga en efectivo al recoger o recibir.", f_name:"Nombre completo", f_phone:"Teléfono", f_fulfil:"Entrega", f_pickup:"Recoger en tienda", f_delivery:"Entrega local", f_address:"Dirección de entrega", f_cash:"Efectivo al recoger/recibir", place_order:"Realizar pedido",
+        confirm_kick:"Pedido recibido", confirm_h:"¡Gracias!", confirm_sub:"Te llamaremos para confirmar. Paga en efectivo al recoger o recibir.", keep_shopping:"Seguir comprando",
+        rep_kick:"Reparaciones", rep_h:"Lo reparamos todo.", rep_sub:"Pantallas, baterías, daños por agua, carga, liberación y recuperación de datos — la mayoría el mismo día, con 12 meses de garantía.", get_quote:"Presupuesto al instante", book_now:"Reservar reparación",
+        quote_kick:"Presupuesto instantáneo", quote_h:"Precio al instante.", quote_sub:"Elige tu dispositivo y el problema para un presupuesto inmediato.", q_brand:"Marca", q_model:"Modelo", q_issue:"Problema", q_estimate:"Precio estimado", book_this:"Reservar esta reparación",
+        book_kick:"Reserva", book_h:"Reservar reparación", b_notes:"Notas (opcional)", b_submit:"Confirmar reserva", ticket_kick:"Reserva confirmada", ticket_h:"Tu número de ticket", ticket_sub:"Guarda este número para seguir el estado de tu reparación.",
+        track_kick:"Seguimiento", track_h:"Sigue tu reparación", track_ph:"ej. REP-5107", track_btn:"Buscar", track_device:"Dispositivo", track_ticket:"Ticket", track_now:"Ahora", track_miss:"No se encontró ninguna reparación con ese número.",
+        contact_kick:"Contacto", contact_h:"Ven o escríbenos.", c_address:"Dirección", c_phone:"Teléfono", c_hours:"Horario", c_email:"Correo", c_message:"Mensaje", c_send:"Enviar mensaje",
+        admin_kick:"Solo personal", admin_login:"Acceso admin", admin_pass:"Contraseña", admin_enter:"Entrar", admin_wrong:"Contraseña incorrecta.", admin_hint:"Contraseña demo: admin", admin_dash:"Panel", admin_logout:"Salir",
+        th_order:"Pedido", th_customer:"Cliente", th_total:"Total", th_status:"Estado", th_ticket:"Ticket", th_device:"Dispositivo", th_issue:"Problema", th_product:"Producto", th_cat:"Categoría", th_price:"Precio", th_author:"Autor", th_review:"Reseña",
+        a_advance:"Avanzar", a_review:"Pedir reseña", a_delete:"Eliminar", a_approve:"Aprobar", a_hide:"Ocultar",
+        p_name_en:"Nombre", p_price:"Precio €", p_add:"Añadir producto",
+        footer:"Reparaciones · Accesorios · Desde 2011",
+        issues:{ screen:"Cambio de pantalla", battery:"Cambio de batería", water:"Daño por agua", port:"Puerto de carga", unlock:"Liberación", data:"Recuperación de datos" },
+        cats:{ all:"Todo", phones:"Móviles", accessories:"Accesorios", audio:"Audio", electronics:"Electrónica" },
+        ostat:["Pendiente","Confirmado","Listo","Completado"], kstat:["Recibido","Diagnóstico","Reparando","Listo","Completado"],
+        svc:[{t:"Cambio de pantalla",d:"Pantallas rotas o negras restauradas a calidad de fábrica.",w:"~30 min"},{t:"Servicio de batería",d:"Células nuevas para móviles que se descargan rápido.",w:"~25 min"},{t:"Daño por agua",d:"Diagnóstico y limpieza a nivel de placa.",w:"1–2 h"},{t:"Puertos de carga",d:"Puertos sueltos o muertos el mismo día.",w:"~30 min"},{t:"Liberación",d:"Todos los operadores, de forma legal.",w:"mismo día"},{t:"Recuperación de datos",d:"Fotos y archivos rescatados de móviles muertos.",w:"presupuesto"}],
+        proc:[{t:"Tráelo",d:"Ven o reserva online — sin cita previa."},{t:"Diagnóstico gratis",d:"Inspeccionamos y presupuestamos antes de empezar."},{t:"Reparamos",d:"La mayoría al momento."},{t:"Garantía 12 meses",d:"Cada reparación cubierta un año entero."}],
+      },
+    };
+  }
+
+  go(route) { this.setState({ route }); if (typeof window !== "undefined") window.scrollTo(0, 0); }
+  money(n) { return "€" + Number(n).toFixed(2); }
+  persistCart(cart) { try { localStorage.setItem("pm_cart", JSON.stringify(cart)); } catch (e) {} }
+
+  addToCart(id) {
+    const cart = this.state.cart.slice();
+    const ex = cart.find(c => c.id === id);
+    if (ex) ex.qty++; else cart.push({ id, qty: 1 });
+    this.persistCart(cart); this.setState({ cart });
+  }
+  changeQty(id, d) {
+    let cart = this.state.cart.map(c => c.id === id ? { ...c, qty: c.qty + d } : c).filter(c => c.qty > 0);
+    this.persistCart(cart); this.setState({ cart });
+  }
+  removeItem(id) { const cart = this.state.cart.filter(c => c.id !== id); this.persistCart(cart); this.setState({ cart }); }
+
+  renderVals() {
+    const S = this.state, L = S.lang, D = this.DICT()[L], t = D;
+    const pname = p => p[L];
+    const cartCount = S.cart.reduce((a, c) => a + c.qty, 0);
+    const findP = id => S.products.find(p => p.id === id);
+    const cartTotal = S.cart.reduce((a, c) => { const p = findP(c.id); return a + (p ? p.price * c.qty : 0); }, 0);
+
+    const decorate = p => ({
+      id: p.id, name: pname(p), cat: D.cats[p.cat], priceLabel: this.money(p.price), tag: p.tag[L],
+      open: () => { this.setState({ currentId: p.id, route: "product" }); window.scrollTo(0, 0); },
+      add: () => this.addToCart(p.id),
+    });
+
+    // shop filtering
+    let list = S.products.filter(p => S.shopCat === "all" || p.cat === S.shopCat);
+    if (S.shopSearch.trim()) { const q = S.shopSearch.toLowerCase(); list = list.filter(p => pname(p).toLowerCase().includes(q)); }
+    if (S.shopSort === "low") list = list.slice().sort((a, b) => a.price - b.price);
+    if (S.shopSort === "high") list = list.slice().sort((a, b) => b.price - a.price);
+
+    const cur = findP(S.currentId) || S.products[0];
+    const issuesArr = Object.keys(D.issues).map(k => ({ key: k, label: D.issues[k] }));
+
+    // tracking
+    const tk = S.trackNum ? S.tickets.find(k => k.num.toUpperCase() === S.trackNum.toUpperCase()) : null;
+    const trackSteps = tk ? D.kstat.map((label, i) => ({
+      label, current: i === tk.status,
+      fill: i <= tk.status ? "var(--color-accent)" : "transparent",
+      color: i <= tk.status ? "var(--color-text)" : "color-mix(in srgb, var(--color-text) 40%, transparent)",
+    })) : [];
+
+    // admin
+    const otagCls = ["tag-neutral", "tag-accent", "tag-accent", "tag-outline"];
+    const ktagCls = ["tag-neutral", "tag-neutral", "tag-accent", "tag-accent", "tag-outline"];
+    const pendingReviews = S.reviews.filter(r => r.status === "pending").length;
+
+    const adminTabs = ["orders", "tickets", "products", "prices", "reviews"].map(k => ({
+      label: ({ orders: t.th_order + "s", tickets: t.nav_track, products: t.th_product + "s", prices: t.q_issue, reviews: t.reviews })[k] || k,
+      pick: () => this.setState({ adminTab: k }),
+      border: S.adminTab === k ? "var(--color-accent)" : "transparent",
+      color: S.adminTab === k ? "var(--color-accent-700)" : "color-mix(in srgb, var(--color-text) 55%, transparent)",
+    }));
+
+    return {
+      t, langLabel: L === "en" ? "ES" : "EN",
+      toggleLang: () => this.setState({ lang: L === "en" ? "es" : "en" }),
+      goHome: () => this.go("home"), goShop: () => this.go("shop"), goRepairs: () => this.go("repairs"),
+      goQuote: () => this.go("quote"), goTrack: () => this.go("track"), goContact: () => this.go("contact"),
+      goCart: () => this.go("cart"), goCheckout: () => this.go("checkout"), goBooking: () => this.go("booking"),
+      goAdmin: () => this.go("admin"),
+      openWhatsApp: () => { if (typeof window !== "undefined") window.open("https://wa.me/34900000000", "_blank"); },
+
+      isHome: S.route === "home", isShop: S.route === "shop", isProduct: S.route === "product",
+      isCart: S.route === "cart", isCheckout: S.route === "checkout", isConfirm: S.route === "confirm",
+      isRepairs: S.route === "repairs", isQuote: S.route === "quote", isBooking: S.route === "booking",
+      isTicketDone: S.route === "ticketdone", isTrack: S.route === "track", isContact: S.route === "contact",
+      isAdmin: S.route === "admin",
+
+      cartCount,
+      stats: [{ n: "30 min", l: L === "en" ? "Average repair" : "Reparación media" }, { n: "12 mo", l: L === "en" ? "Warranty" : "Garantía" }, { n: "14 yrs", l: L === "en" ? "In business" : "De experiencia" }, { n: "4.9 ★", l: L === "en" ? "2,300+ reviews" : "+2.300 reseñas" }],
+      featured: S.products.slice(0, 4).map(decorate),
+      steps: D.proc.slice(0, 3).map((p, i) => ({ n: i + 1, t: p.t, d: p.d })),
+      homeReviews: S.reviews.filter(r => r.status === "approved").slice(0, 3).map(r => ({ text: "“" + r.text + "”", author: "— " + r.author })),
+
+      shopSearch: S.shopSearch, setSearch: e => this.setState({ shopSearch: e.target.value }),
+      shopSort: S.shopSort, setSort: e => this.setState({ shopSort: e.target.value }),
+      categories: ["all", "phones", "accessories", "audio", "electronics"].map(c => ({ label: D.cats[c], cls: S.shopCat === c ? "on" : "", pick: () => this.setState({ shopCat: c }) })),
+      shopList: list.map(decorate), shopEmpty: list.length === 0,
+
+      product: decorate(cur), addCurrent: () => this.addToCart(cur.id), buyNow: () => { this.addToCart(cur.id); this.go("cart"); },
+      productReviews: S.reviews.filter(r => r.status === "approved").slice(0, 2).map(r => ({ text: "“" + r.text + "”", author: "— " + r.author })),
+      related: S.products.filter(p => p.cat === cur.cat && p.id !== cur.id).slice(0, 4).map(decorate),
+
+      cartEmpty: S.cart.length === 0, cartHasItems: S.cart.length > 0,
+      cartLines: S.cart.map(c => { const p = findP(c.id); return { name: pname(p), priceLabel: this.money(p.price), qty: c.qty, lineLabel: this.money(p.price * c.qty), inc: () => this.changeQty(c.id, 1), dec: () => this.changeQty(c.id, -1), remove: () => this.removeItem(c.id) }; }),
+      cartTotalLabel: this.money(cartTotal),
+
+      coName: S.coName, setCoName: e => this.setState({ coName: e.target.value }),
+      coPhone: S.coPhone, setCoPhone: e => this.setState({ coPhone: e.target.value }),
+      coAddr: S.coAddr, setCoAddr: e => this.setState({ coAddr: e.target.value }),
+      setPickup: () => this.setState({ coFulfill: "pickup" }), setDelivery: () => this.setState({ coFulfill: "delivery" }),
+      pickupCls: S.coFulfill === "pickup" ? "on" : "", deliveryCls: S.coFulfill === "delivery" ? "on" : "", isDelivery: S.coFulfill === "delivery",
+      placeOrder: () => { const num = "ORD-" + Math.floor(2044 + Math.random() * 900); const orders = [{ num, customer: S.coName || "Guest", total: cartTotal, status: 0 }, ...S.orders]; this.persistCart([]); this.setState({ orders, cart: [], lastOrderNum: num, route: "confirm" }); window.scrollTo(0, 0); },
+      lastOrderNum: S.lastOrderNum,
+
+      services: D.svc.map((s, i) => ({ t: s.t, d: s.d, w: s.w, p: this.money(S.prices[Object.keys(S.prices)[i]]).replace("€", "from €") })),
+      process: D.proc.map((p, i) => ({ n: "0" + (i + 1), t: p.t, d: p.d })),
+
+      brands: ["Apple", "Samsung", "Google", "Xiaomi"],
+      models: S.qBrand ? { Apple: ["iPhone 15", "iPhone 14", "iPhone 13"], Samsung: ["Galaxy S24", "Galaxy S23", "Galaxy A54"], Google: ["Pixel 8", "Pixel 7"], Xiaomi: ["Redmi Note 13", "13T Pro"] }[S.qBrand] || [] : [],
+      issues: issuesArr,
+      qBrand: S.qBrand, setQBrand: e => this.setState({ qBrand: e.target.value, qModel: "" }),
+      qModel: S.qModel, setQModel: e => this.setState({ qModel: e.target.value }),
+      qIssue: S.qIssue, setQIssue: e => this.setState({ qIssue: e.target.value }),
+      hasQuote: !!(S.qBrand && S.qIssue), quotePrice: S.qIssue ? this.money(S.prices[S.qIssue]) : "",
+
+      bkName: S.bkName, setBkName: e => this.setState({ bkName: e.target.value }),
+      bkPhone: S.bkPhone, setBkPhone: e => this.setState({ bkPhone: e.target.value }),
+      bkBrand: S.bkBrand, setBkBrand: e => this.setState({ bkBrand: e.target.value }),
+      bkIssue: S.bkIssue, setBkIssue: e => this.setState({ bkIssue: e.target.value }),
+      bkNotes: S.bkNotes, setBkNotes: e => this.setState({ bkNotes: e.target.value }),
+      submitBooking: () => { const num = "REP-" + Math.floor(5110 + Math.random() * 800); const device = (S.bkBrand || "Device"); const issue = S.bkIssue || "screen"; const tickets = [{ num, device, issue, status: 0 }, ...S.tickets]; this.setState({ tickets, lastTicketNum: num, route: "ticketdone" }); window.scrollTo(0, 0); },
+      lastTicketNum: S.lastTicketNum,
+
+      trackInput: S.trackInput, setTrackInput: e => this.setState({ trackInput: e.target.value }),
+      doTrack: () => this.setState({ trackNum: S.trackInput.trim(), trackTried: true }),
+      trackFound: !!tk, trackMiss: S.trackTried && !tk,
+      trackResult: tk ? { device: tk.device, num: tk.num } : { device: "", num: "" },
+      trackSteps,
+
+      adminLocked: !S.adminAuthed, adminOpen: S.adminAuthed,
+      adminPass: S.adminPass, setAdminPass: e => this.setState({ adminPass: e.target.value }),
+      doLogin: () => { if (S.adminPass === "admin") this.setState({ adminAuthed: true, adminErr: false }); else this.setState({ adminErr: true }); },
+      adminErr: S.adminErr, doLogout: () => this.setState({ adminAuthed: false, adminPass: "" }),
+      adminCounts: [{ n: S.products.length, l: t.th_product + "s" }, { n: S.orders.length, l: t.th_order + "s" }, { n: S.tickets.length, l: t.nav_track }, { n: pendingReviews, l: L === "en" ? "Pending reviews" : "Reseñas pend." }],
+      adminTabs,
+      atOrders: S.adminTab === "orders", atTickets: S.adminTab === "tickets", atProducts: S.adminTab === "products", atPrices: S.adminTab === "prices", atReviews: S.adminTab === "reviews",
+      ordersRows: S.orders.map(o => ({ num: o.num, customer: o.customer, total: this.money(o.total), status: D.ostat[o.status], tagCls: otagCls[o.status], advance: () => { const orders = S.orders.map(x => x.num === o.num ? { ...x, status: Math.min(3, x.status + 1) } : x); this.setState({ orders }); }, whatsapp: () => window.open("https://wa.me/34900000000?text=" + encodeURIComponent("Hi " + o.customer + ", thanks for your order " + o.num + "! Could you leave us a review?"), "_blank") })),
+      ticketRows: S.tickets.map(k => ({ num: k.num, device: k.device, issue: D.issues[k.issue] || k.issue, status: D.kstat[k.status], tagCls: ktagCls[k.status], advance: () => { const tickets = S.tickets.map(x => x.num === k.num ? { ...x, status: Math.min(4, x.status + 1) } : x); this.setState({ tickets }); }, whatsapp: () => window.open("https://wa.me/34900000000?text=" + encodeURIComponent("Hi! Your repair " + k.num + " is done — could you leave a review?"), "_blank") })),
+      productRows: S.products.map(p => ({ name: pname(p), cat: D.cats[p.cat], price: this.money(p.price), del: () => this.setState({ products: S.products.filter(x => x.id !== p.id) }) })),
+      npName: S.npName, setNpName: e => this.setState({ npName: e.target.value }),
+      npPrice: S.npPrice, setNpPrice: e => this.setState({ npPrice: e.target.value }),
+      addProduct: () => { if (!S.npName) return; const id = Math.max(0, ...S.products.map(p => p.id)) + 1; const products = [...S.products, { id, cat: "accessories", en: S.npName, es: S.npName, price: parseFloat(S.npPrice) || 0, tag: { en: "", es: "" } }]; this.setState({ products, npName: "", npPrice: "" }); },
+      priceRows: Object.keys(S.prices).map(k => ({ label: D.issues[k], price: String(S.prices[k]), edit: e => { const v = parseFloat(e.target.value) || 0; this.setState({ prices: { ...S.prices, [k]: v } }); } })),
+      reviewRows: S.reviews.map(r => ({ author: r.author, text: r.text, status: r.status, tagCls: r.status === "approved" ? "tag-accent" : r.status === "pending" ? "tag-neutral" : "tag-outline", approve: () => this.setState({ reviews: S.reviews.map(x => x.id === r.id ? { ...x, status: "approved" } : x) }), hide: () => this.setState({ reviews: S.reviews.map(x => x.id === r.id ? { ...x, status: "hidden" } : x) }), del: () => this.setState({ reviews: S.reviews.filter(x => x.id !== r.id) }) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

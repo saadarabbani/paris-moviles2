@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap');
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════
+   Paris Móviles — Industry design system (steel-blue wireframe)
+   Tokens + component classes ported from the design project.
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --color-bg: #f2f2f3;
+  --color-surface: #e9e9ea;
+  --color-text: #1d1f20;
+  --color-accent: #5980a6;
+  --color-accent-2: #728fab;
+  --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
+
+  --color-neutral-100: #f5f5f8;
+  --color-neutral-800: #424244;
+  --color-neutral-900: #2b2b2d;
+
+  --color-accent-100: #eef6ff;
+  --color-accent-600: #597ea3;
+  --color-accent-700: #416180;
+  --color-accent-800: #2c455d;
+  --color-accent-900: #1d2d3d;
+
+  --font-heading: "Barlow Condensed", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Barlow", system-ui, sans-serif;
+
+  --space-1: 3.4px; --space-2: 6.8px; --space-3: 10.2px; --space-4: 13.6px;
+  --radius-md: 4px;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2b2b2d 12%, transparent);
+  --shadow-md: 0 6px 22px color-mix(in srgb, #1d2d3d 14%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
+}
+
+* { box-sizing: border-box; }
+html, body { padding: 0; margin: 0; }
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+}
+a { color: var(--color-accent); text-decoration: none; cursor: pointer; }
+a:hover { color: var(--color-accent-700); }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — headings / text helpers — */
+.pm-hd { font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+.pm-kick { font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); }
+
+/* — registration corner marks — */
+.pm-corner { position: absolute; width: 15px; height: 15px; color: color-mix(in srgb, var(--color-text) 55%, transparent); pointer-events: none; }
+.pm-corner::before { content: ""; position: absolute; left: 7px; top: 0; width: 1px; height: 100%; background: currentColor; }
+.pm-corner::after  { content: ""; position: absolute; top: 7px; left: 0; width: 100%; height: 1px; background: currentColor; }
+.pm-corner.tl { top: -8px; left: -8px; } .pm-corner.tr { top: -8px; right: -8px; }
+.pm-corner.bl { bottom: -8px; left: -8px; } .pm-corner.br { bottom: -8px; right: -8px; }
+
+/* — placeholder photo slot (hatched) — */
+.pm-shot {
+  position: relative; overflow: hidden; background: var(--color-surface);
+  background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--color-text) 5%, transparent) 0 14px, transparent 14px 28px);
+  display: flex; align-items: center; justify-content: center;
+}
+.pm-shot span { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.02em; color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+
+/* — frames / chips / nav — */
+/* Boxes removed site-wide: no frame borders, no corner registration marks. */
+.pm-frame { position: relative; border: none; }
+.pm-corner { display: none; }
+/* borderless product card (no box around products / photos) */
+.pm-card { position: relative; }
+.pm-card .pm-shot { transition: opacity .18s ease; }
+.pm-card:hover .pm-shot { opacity: 0.9; }
+.pm-nav a { font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text); }
+.pm-nav a:hover { color: var(--color-accent); }
+.pm-chip {
+  font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 8px 14px; border: 1px solid var(--color-divider); cursor: pointer; background: transparent; color: var(--color-text);
+}
+.pm-chip.on { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+
+/* — floating WhatsApp — */
+.pm-wa {
+  position: fixed; right: 26px; bottom: 26px; z-index: 50; width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-lg); cursor: pointer; border: none;
+}
+
+/* ══════════ FAQ chatbot ══════════ */
+.pm-chat-launcher {
+  position: fixed; right: 26px; bottom: 92px; z-index: 51;
+  height: 52px; padding: 0 20px 0 16px; display: flex; align-items: center; gap: 9px;
+  border: none; border-radius: 26px; cursor: pointer;
+  background: var(--color-accent-900); color: #fff;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-heading); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.pm-chat-launcher:hover { background: var(--color-accent-800); }
+.pm-chat-panel {
+  position: fixed; right: 26px; bottom: 92px; z-index: 52;
+  width: min(374px, calc(100vw - 32px));
+  height: min(544px, calc(100vh - 130px));
+  display: flex; flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
+  border-radius: 10px; overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: pmfade .2s ease;
+}
+.pm-chat-head {
+  display: flex; align-items: center; gap: 11px; padding: 15px 16px;
+  background:
+    radial-gradient(600px 200px at 0% 0%, color-mix(in srgb, var(--color-accent) 40%, transparent), transparent 70%),
+    var(--color-accent-900);
+  color: #fff;
+}
+.pm-chat-head__avatar {
+  width: 38px; height: 38px; flex: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, #fff 16%, transparent);
+}
+.pm-chat-head__title { font-family: var(--font-heading); font-weight: 600; font-size: 16px; letter-spacing: 0.03em; }
+.pm-chat-head__status { font-size: 11px; letter-spacing: 0.04em; color: color-mix(in srgb, #fff 70%, transparent); display: flex; align-items: center; gap: 6px; }
+.pm-chat-head__dot { width: 7px; height: 7px; border-radius: 50%; background: #34d17d; display: inline-block; }
+.pm-chat-head__close { margin-left: auto; background: transparent; border: none; color: #fff; cursor: pointer; opacity: .8; display: flex; }
+.pm-chat-head__close:hover { opacity: 1; }
+.pm-chat-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.pm-chat-msg { max-width: 84%; font-size: 14px; line-height: 1.5; padding: 10px 13px; border-radius: 12px; }
+.pm-chat-msg.bot { align-self: flex-start; background: #fff; border: 1px solid var(--color-divider); border-bottom-left-radius: 3px; }
+.pm-chat-msg.user { align-self: flex-end; background: var(--color-accent); color: #fff; border-bottom-right-radius: 3px; }
+.pm-chat-msg a { color: var(--color-accent-700); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.pm-chat-msg .pm-chat-link {
+  display: inline-flex; margin-top: 8px; font-family: var(--font-heading); font-weight: 600;
+  font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+  color: var(--color-accent-700);
+}
+.pm-chat-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 16px 12px; }
+.pm-chat-chip {
+  font-size: 12.5px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--color-accent-700);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-divider)); border-radius: 16px;
+}
+.pm-chat-chip:hover { background: var(--color-accent-100); }
+.pm-chat-foot { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--color-divider); background: var(--color-bg); }
+.pm-chat-foot .input { border-radius: 20px; }
+.pm-chat-send {
+  flex: none; width: 40px; height: 38px; border: none; border-radius: 20px; cursor: pointer;
+  background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center;
+}
+.pm-chat-send:hover { background: var(--color-accent-600); }
+@media (max-width: 560px) {
+  .pm-chat-panel { right: 16px; bottom: 84px; }
+  .pm-chat-launcher { right: 16px; bottom: 84px; padding: 0 16px; }
+}
+
+/* — route transition — */
+.pm-in { animation: pmfade .28s ease; }
+@keyframes pmfade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* — buttons — */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none; font-family: var(--font-heading); font-weight: 600;
+  font-size: 13px; line-height: 1.2; color: var(--color-text);
+  background: transparent; border: 1px solid var(--color-divider);
+  padding: 8px 12px; border-radius: 0;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+.btn-primary:hover { background: var(--color-accent-600); color: var(--color-bg); }
+.btn-primary:active { background: var(--color-accent-700); }
+.btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.btn-block { width: 100%; }
+
+/* — forms — */
+.field > label { display: block; font-size: 12px; margin-bottom: 5px; color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+.input {
+  width: 100%; min-height: 36px; padding: 6px 10px; font: inherit; font-size: 14px;
+  color: var(--color-text); caret-color: var(--color-accent); background: var(--color-surface);
+  border: 1px solid var(--color-divider); border-radius: 0;
+}
+.input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+textarea.input { min-height: 90px; resize: vertical; }
+select.input { appearance: none; cursor: pointer; }
+
+/* — tags — */
+.tag { display: inline-flex; align-items: center; font-size: 11px; letter-spacing: 0.02em; padding: 3px 10px; border-radius: 0; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — tables — */
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  padding: var(--space-2); border-bottom: 1px solid var(--color-divider);
+}
+.table td { padding: var(--space-2); border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent); }
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
+
+/* — layout helper — */
+.pm-wrap { max-width: 1240px; margin: 0 auto; }
+
+/* ══════════ Premium footer ══════════ */
+.site-footer {
+  margin-top: 64px;
+  background:
+    radial-gradient(1200px 400px at 15% -10%, color-mix(in srgb, var(--color-accent) 32%, transparent), transparent 60%),
+    var(--color-accent-900);
+  color: color-mix(in srgb, #ffffff 82%, transparent);
+  border-top: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+}
+.site-footer a { color: color-mix(in srgb, #ffffff 72%, transparent); transition: color .15s ease; }
+.site-footer a:hover { color: #ffffff; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding: 56px 40px 40px;
+}
+.footer-brand-name { font-size: 26px; letter-spacing: 0.04em; color: #fff; }
+.footer-col-h {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in srgb, #ffffff 55%, transparent);
+  margin: 0 0 16px;
+}
+.footer-link { display: block; font-size: 14px; padding: 6px 0; }
+.footer-contact-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; font-size: 14px; }
+.footer-contact-row svg { flex: none; margin-top: 2px; color: color-mix(in srgb, var(--color-accent-300, #b5d9fd) 90%, #fff); }
+.footer-wa {
+  display: inline-flex; align-items: center; gap: 9px; margin-top: 20px;
+  padding: 11px 18px; border-radius: var(--radius-md);
+  background: #25D366; color: #06301a !important; font-family: var(--font-heading);
+  font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.footer-wa:hover { background: #1fb959; color: #06301a !important; }
+.footer-social { display: flex; gap: 10px; margin-top: 22px; }
+.footer-social a {
+  width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid color-mix(in srgb, #ffffff 20%, transparent); border-radius: var(--radius-md);
+}
+.footer-social a:hover { border-color: #fff; background: color-mix(in srgb, #ffffff 10%, transparent); }
+.footer-bottom {
+  border-top: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+  padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-size: 12.5px; color: color-mix(in srgb, #ffffff 60%, transparent);
+}
+.footer-lang {
+  font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.06em;
+  padding: 6px 12px; background: transparent; cursor: pointer;
+  color: color-mix(in srgb, #ffffff 75%, transparent);
+  border: 1px solid color-mix(in srgb, #ffffff 22%, transparent); border-radius: var(--radius-md);
+}
+.footer-lang:hover { color: #fff; border-color: #fff; }
+
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; padding: 44px 28px 32px; }
+  .footer-bottom { padding: 18px 28px; }
+}
+@media (max-width: 560px) {
+  .footer-top { grid-template-columns: 1fr; }
+}
+
+/* ══════════ Premium repair-service cards ══════════ */
+.repair-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+.repair-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px 22px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+/* accent hairline that fills in on hover */
+.repair-card::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--color-accent);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform .22s ease;
+}
+.repair-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider));
+}
+.repair-card:hover::before { transform: scaleY(1); }
+.repair-card__icon {
+  width: 46px; height: 46px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-accent-700);
+  background: var(--color-accent-100);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-radius: var(--radius-md);
+  margin-bottom: 18px;
+}
+.repair-card__title { font-size: 19px; margin: 0; }
+.repair-card__desc {
+  font-size: 14px; line-height: 1.55; margin: 9px 0 0; flex: 1;
+  color: color-mix(in srgb, var(--color-text) 72%, transparent);
+}
+.repair-card__foot {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 12px; margin-top: 22px; padding-top: 16px;
+  border-top: 1px solid var(--color-divider);
+}
+.repair-card__from {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+.repair-card__price { font-size: 26px; line-height: 1; color: var(--color-accent-700); }
+.repair-card__eta {
+  font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--color-accent-800); background: var(--color-accent-100);
+  padding: 5px 10px; border-radius: var(--radius-md); white-space: nowrap;
+}
+
+/* — responsive: collapse multi-column grids on small screens — */
+@media (max-width: 900px) {
+  .pm-grid-hero { grid-template-columns: 1fr !important; }
+  .pm-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  .pm-grid-3 { grid-template-columns: 1fr !important; }
+  .pm-grid-2 { grid-template-columns: 1fr !important; }
+  .pm-nav-links { display: none !important; }
+}
+@media (max-width: 560px) {
+  .pm-grid-4 { grid-template-columns: 1fr !important; }
+}
